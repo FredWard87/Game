@@ -6,94 +6,108 @@ public class generateCoins : MonoBehaviour
 {
     public GameObject powerup;
     public GameObject obstacle;
-    public float powerupHeight = 1f;
-    public float obstacleHeight = 2.5f;
-    
-    // Configuración SUPER SIMPLE
+    public float powerupMinHeight = 0.8f;   // 🔥 altura mínima de monedas
+    public float powerupMaxHeight = 2f;     // 🔥 altura máxima de monedas
+    public float obstacleMinHeight = 2f;    // 🔥 altura mínima de obstáculos
+    public float obstacleMaxHeight = 3f;    // 🔥 altura máxima de obstáculos
+
     public bool useStaticGeneration = true;
-    public int totalCoins = 8;           // Exactamente 8 monedas
-    public int totalObstacles = 4;       // Exactamente 4 obstáculos
-    
+    public int totalCoins = 20;             // total de monedas
+    public int totalObstacles = 10;         // total de obstáculos
+    public int itemsPerPlatform = 4;        // 🔥 número de objetos por plataforma (aprox.)
+
     private gamecontrol gameControl;
     private List<GameObject> groundObjects = new List<GameObject>();
-    
+
     void Start()
     {
         gameControl = FindObjectOfType<gamecontrol>();
-        
+
         if (useStaticGeneration)
         {
             FindGroundObjects();
-            GenerateExactObjects();
+            GenerateRandomObjects();
         }
     }
-    
+
     void FindGroundObjects()
     {
-        // Buscar objetos Ground de varias formas
         GameObject[] allObjects = FindObjectsOfType<GameObject>();
         foreach (GameObject obj in allObjects)
         {
-            if (obj.name.Contains("Ground") || obj.name.Contains("ground") || 
+            if (obj.name.Contains("Ground") || obj.name.Contains("ground") ||
                 obj.name.Contains("Platform") || obj.name.Contains("platform"))
             {
                 groundObjects.Add(obj);
                 Debug.Log("Encontrado: " + obj.name);
             }
         }
-        
+
         Debug.Log("Total de objetos válidos encontrados: " + groundObjects.Count);
-        
+
         if (groundObjects.Count == 0)
         {
-            Debug.LogError("NO SE ENCONTRARON OBJETOS GROUND! El juego no tendrá monedas ni obstáculos.");
+            Debug.LogError("❌ NO SE ENCONTRARON OBJETOS GROUND! El juego no tendrá monedas ni obstáculos.");
         }
     }
-    
-    void GenerateExactObjects()
+
+    void GenerateRandomObjects()
     {
         if (groundObjects.Count == 0) return;
-        
-        // Mezclar para distribución aleatoria
+
         Shuffle(groundObjects);
-        
-        // Generar monedas EXACTAS
-        for (int i = 0; i < Mathf.Min(totalCoins, groundObjects.Count); i++)
+
+        int coinsPlaced = 0;
+        int obstaclesPlaced = 0;
+
+        foreach (GameObject ground in groundObjects)
         {
-            GenerateObjectOnGround(groundObjects[i], powerup, powerupHeight);
+            // Número aleatorio de ítems por plataforma
+            int randomCount = Random.Range(2, itemsPerPlatform + 1);
+
+            for (int i = 0; i < randomCount; i++)
+            {
+                bool spawnCoin = Random.value > 0.4f; // 60% monedas, 40% obstáculos
+                if (spawnCoin && coinsPlaced < totalCoins)
+                {
+                    GenerateObjectOnGround(ground, powerup, powerupMinHeight, powerupMaxHeight);
+                    coinsPlaced++;
+                }
+                else if (!spawnCoin && obstaclesPlaced < totalObstacles)
+                {
+                    GenerateObjectOnGround(ground, obstacle, obstacleMinHeight, obstacleMaxHeight);
+                    obstaclesPlaced++;
+                }
+            }
+
+            if (coinsPlaced >= totalCoins && obstaclesPlaced >= totalObstacles)
+                break;
         }
-        
-        // Generar obstáculos EXACTOS (usando siguientes objetos)
-        int startIndex = Mathf.Min(totalCoins, groundObjects.Count);
-        int endIndex = Mathf.Min(startIndex + totalObstacles, groundObjects.Count);
-        
-        for (int i = startIndex; i < endIndex; i++)
-        {
-            GenerateObjectOnGround(groundObjects[i], obstacle, obstacleHeight);
-        }
-        
-        Debug.Log("✅ GENERACIÓN EXITOSA: " + 
-                 Mathf.Min(totalCoins, groundObjects.Count) + " monedas, " + 
-                 Mathf.Max(0, endIndex - startIndex) + " obstáculos");
+
+        Debug.Log($"✅ GENERACIÓN COMPLETA: {coinsPlaced} monedas y {obstaclesPlaced} obstáculos generados.");
     }
-    
-    void GenerateObjectOnGround(GameObject ground, GameObject prefab, float height)
+
+    void GenerateObjectOnGround(GameObject ground, GameObject prefab, float minY, float maxY)
     {
-        Vector3 position = GetSafePositionOnGround(ground);
-        position.y = height;
-        
-        GameObject obj = (GameObject)Instantiate(prefab, position, Quaternion.identity);
-        Debug.Log(prefab.name + " generado en: " + ground.name);
+        Vector3 position = GetRandomPositionOnGround(ground);
+        position.y = Random.Range(minY, maxY); // 🔥 altura aleatoria
+
+        Instantiate(prefab, position, Quaternion.identity);
+        Debug.Log($"{prefab.name} generado en {ground.name} en posición {position}");
     }
-    
-    Vector3 GetSafePositionOnGround(GameObject ground)
+
+    Vector3 GetRandomPositionOnGround(GameObject ground)
     {
-        Vector3 groundPos = ground.transform.position;
-        
-        // Posición siempre en el centro para evitar problemas
-        return new Vector3(groundPos.x, groundPos.y, groundPos.z);
+        Vector3 center = ground.transform.position;
+        Vector3 scale = ground.transform.localScale;
+
+        // 🔥 Posición aleatoria dentro del tamaño aproximado del ground
+        float randomX = center.x + Random.Range(-scale.x, scale.x);
+        float randomZ = center.z + Random.Range(-scale.z, scale.z);
+
+        return new Vector3(randomX, center.y, randomZ);
     }
-    
+
     void Shuffle(List<GameObject> list)
     {
         for (int i = 0; i < list.Count; i++)
@@ -104,7 +118,7 @@ public class generateCoins : MonoBehaviour
             list[randomIndex] = temp;
         }
     }
-    
+
     void Update()
     {
         if (gameControl != null && gameControl.isGameOver) return;

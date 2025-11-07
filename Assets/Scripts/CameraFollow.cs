@@ -1,44 +1,35 @@
 using UnityEngine;
-using System.Collections;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform target; // El personaje a seguir
-    public Vector3 offset = new Vector3(0, 2, -5); // Distancia de la cámara
-    public float rotationSpeed = 2f;
-    public float followSpeed = 5f;
-    
-    private float currentRotationX = 0f;
-    private float currentRotationY = 0f;
+    [Header("Referencia al jugador")]
+    public Transform player;
 
-    void Start()
-    {
-        if (target == null)
-        {
-            target = GameObject.FindGameObjectWithTag("Player").transform;
-        }
-    }
+    [Header("Ajustes de cámara")]
+    public Vector3 offset = new Vector3(0f, 5f, -10f);  // Posición de la cámara respecto al jugador
+    public float smoothSpeed = 0.125f;                   // Velocidad de suavizado
+
+    [Header("Rotación de cámara (opcional)")]
+    public Vector3 rotationOffset = new Vector3(10f, 0f, 0f); // Ángulo adicional opcional
 
     void LateUpdate()
     {
-        if (target == null) return;
+        if (player == null) return;
 
-        // Rotación de la cámara con mouse
-        if (Input.GetMouseButton(1)) // Botón derecho del mouse
-        {
-            currentRotationX += Input.GetAxis("Mouse X") * rotationSpeed;
-            currentRotationY -= Input.GetAxis("Mouse Y") * rotationSpeed;
-            currentRotationY = Mathf.Clamp(currentRotationY, -30, 60);
-        }
+        // 1️⃣ Calcula la posición deseada de la cámara
+        Vector3 desiredPosition = player.position + offset;
 
-        // Calcular rotación
-        Quaternion rotation = Quaternion.Euler(currentRotationY, currentRotationX, 0);
-        
-        // Posición de la cámara
-        Vector3 desiredPosition = target.position + rotation * offset;
-        
-        // Suavizar movimiento
-        transform.position = Vector3.Lerp(transform.position, desiredPosition, followSpeed * Time.deltaTime);
-        transform.LookAt(target.position + Vector3.up * 1.5f); // Mirar al personaje
+        // 2️⃣ Mueve la cámara suavemente hacia esa posición
+        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
+        transform.position = smoothedPosition;
+
+        // 3️⃣ Calcula la rotación deseada mirando al jugador
+        Quaternion desiredRotation = Quaternion.LookRotation(player.position - transform.position);
+
+        // 4️⃣ Aplica una rotación extra si se desea (opcional)
+        desiredRotation *= Quaternion.Euler(rotationOffset);
+
+        // 5️⃣ Suaviza la rotación
+        transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, smoothSpeed);
     }
 }

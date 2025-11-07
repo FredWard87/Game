@@ -5,6 +5,6 @@ public class nextLevel : MonoBehaviour
 {
 	public void OnClickPlay()
 	{
-		Application.LoadLevel("level");
+		Application.LoadLevel("Niveles");
 	}
 }
