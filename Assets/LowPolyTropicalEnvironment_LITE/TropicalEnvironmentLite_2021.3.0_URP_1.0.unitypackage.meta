@@ -5,6 +5,7 @@ DefaultImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+<<<<<<< Updated upstream
 AssetOrigin:
   serializedVersion: 1
   productId: 242437
@@ -12,3 +13,5 @@ AssetOrigin:
   packageVersion: 1.0
   assetPath: Assets/LowPolyTropicalEnvironment_LITE/TropicalEnvironmentLite_2021.3.0_URP_1.0.unitypackage
   uploadId: 617978
+=======
+>>>>>>> Stashed changes

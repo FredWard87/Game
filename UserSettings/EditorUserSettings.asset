@@ -6,6 +6,7 @@ EditorUserSettings:
   serializedVersion: 4
   m_ConfigSettings:
     RecentlyUsedSceneGuid-0:
+<<<<<<< Updated upstream
       value: 5552025155040c03090c592116775c4412161d2b7f7f73667a714b67e7b03269
       flags: 0
     RecentlyUsedSceneGuid-1:
@@ -14,6 +15,31 @@ EditorUserSettings:
     RecentlyUsedSceneGuid-2:
       value: 5b5501515d0d5f5d5a5f5c7645705d4443161e797a71246528794f32b5b2313a
       flags: 0
+=======
+      value: 5b060c5e50530b590c595f7443260f4443151c72792b75687c281e61b7b66660
+      flags: 0
+    RecentlyUsedSceneGuid-1:
+      value: 5208045f5c575e020e5c5a2048215d444f16407c2a2b73357c2c4e64e0b2356f
+      flags: 0
+    RecentlyUsedSceneGuid-2:
+      value: 5b5501515d0d5f5d5a5f5c7645705d4443161e797a71246528794f32b5b2313a
+      flags: 0
+    RecentlyUsedSceneGuid-3:
+      value: 5552025155040c03090c592116775c4412161d2b7f7f73667a714b67e7b03269
+      flags: 0
+    RecentlyUsedSceneGuid-4:
+      value: 5652025651515c0f5d5a0a7b1121594417154d78797b25682e711e37e0e4663b
+      flags: 0
+    UnityEditor.ShaderGraph.Blackboard:
+      value: 18135939215a0a5004000b0e15254b524c030a3f2964643d120d1230e9e93a3fd6e826abbd3c3e302a07a37e0901373ae01e0008f707250d171df81a53a5405d41895ac825e0100ec20313c0d91cddccd3d0c7efcca9bd80908fecb0f9cfddf1eff4e7a1b1eae482f0fdaee1e1928b86d888ed909c968797a7cf
+      flags: 0
+    UnityEditor.ShaderGraph.FloatingWindowsLayout2:
+      value: 181344140043005e1a220d3b1f364b524c0c5a27130c293326201334cee5322ca0bd30e8eb293a707b0fd0180b3d0a36fc0d3d04e649500d1002ee0b5dbd1d2c27c00ad113cb1e10e41f1addc80993b98d9884a69ae6d8f0d1cda9e8fbfefaf9f9dea3fdb9ade882f0f7b0e1e380cafbf2c3adc18e9cd285a2908b82ec879c84808fdc8e8ed0818980dbf8daf7dce5bdd1fbf5c4c1ebc1fbcdcecdea33e2ff35323130e2a1a5ab
+      flags: 0
+    UnityEditor.ShaderGraph.InspectorWindow:
+      value: 18135939215a0a5004000b0e15254b524c1119263f2d6a722016393ce1eb3d36e5d339f9a5602b2e2c07a37e0901373ae01e0008f707250d171df81a53a5485d41895ac825e0100ec20313c0d91cddccd3d0c7efcca9bd80908fecb0f9cfddf1eff4e7a1b1eae482f0fcaee1e1928b86d888ed969b938795ea828182ec8182848985d4848e9ac5
+      flags: 0
+>>>>>>> Stashed changes
     lightmappingBakingProfile:
       value: 51
       flags: 0

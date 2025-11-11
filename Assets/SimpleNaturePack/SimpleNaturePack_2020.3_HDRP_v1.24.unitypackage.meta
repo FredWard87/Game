@@ -5,6 +5,7 @@ DefaultImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+<<<<<<< Updated upstream
 AssetOrigin:
   serializedVersion: 1
   productId: 162153
@@ -12,3 +13,5 @@ AssetOrigin:
   packageVersion: 1.24
   assetPath: Assets/SimpleNaturePack/SimpleNaturePack_2020.3_HDRP_v1.24.unitypackage
   uploadId: 582302
+=======
+>>>>>>> Stashed changes

@@ -5,6 +5,7 @@ DefaultImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+<<<<<<< Updated upstream
 AssetOrigin:
   serializedVersion: 1
   productId: 266763
@@ -12,3 +13,5 @@ AssetOrigin:
   packageVersion: 1.0
   assetPath: Assets/VertexRageStudio/LowPolyNatureEssentials/SRP/HDRP.unitypackage
   uploadId: 616976
+=======
+>>>>>>> Stashed changes
