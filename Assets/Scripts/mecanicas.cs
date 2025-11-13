@@ -1,36 +1,35 @@
 using UnityEngine;
-using TMPro; // para usar TextMeshPro
 using UnityEngine.UI;
 
 public class mecanicas : MonoBehaviour
 {
-    [Header("Referencia al texto de instrucciones")]
-    public TextMeshProUGUI instruccionesText;
+    [Header("Referencia a la imagen de instrucciones")]
+    public Image instruccionesImage;
 
     [Header("Duración del mensaje (segundos)")]
     public float duracionMensaje = 10f;
 
-    // Llamar este método desde el botón
+    // Desactivar la imagen al iniciar el juego
+    private void Start()
+    {
+        if (instruccionesImage != null)
+        {
+            instruccionesImage.gameObject.SetActive(false);
+        }
+        // ¡QUITÉ todo lo demás! Solo debe desactivarse aquí
+    }
+
+    // Llamar este método desde el botón "Mecanicas"
     public void MostrarInstrucciones()
     {
-        if (instruccionesText == null)
+        if (instruccionesImage == null)
         {
-            Debug.LogWarning("No se asignó el texto de instrucciones en el inspector.");
+            Debug.LogWarning("No se asignó la imagen de instrucciones en el inspector.");
             return;
         }
 
-        // Texto que aparecerá en pantalla
-        string mensaje = 
-@"Te mueves con: W A S D
-Saltas con: Barra espaciadora
-Corres con: Shift
-Mueves la cámara con: Mouse
-Tienes 12 segundos iniciales
-Por cada plátano: +5 segundos
-Completas el nivel al obtener 35 plátanos";
-
-        instruccionesText.text = mensaje;
-        instruccionesText.gameObject.SetActive(true);
+        // Mostrar la imagen
+        instruccionesImage.gameObject.SetActive(true);
 
         // Ocultar después de unos segundos
         Invoke(nameof(OcultarInstrucciones), duracionMensaje);
@@ -38,6 +37,6 @@ Completas el nivel al obtener 35 plátanos";
 
     private void OcultarInstrucciones()
     {
-        instruccionesText.gameObject.SetActive(false);
+        instruccionesImage.gameObject.SetActive(false);
     }
 }
